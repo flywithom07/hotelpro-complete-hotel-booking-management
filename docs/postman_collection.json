@@ -1,0 +1,140 @@
+{
+  "info": {
+    "name": "HotelPro Hospitality API",
+    "description": "Comprehensive Postman Collection for testing all HotelPro MERN stack endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "System Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/system/status",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "system", "status"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Login as Manager",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"manager@hotelpro.io\",\n  \"password\": \"HotelPro@2026\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Hotels - List All",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/hotels?destination=Malibu",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "hotels"],
+          "query": [{ "key": "destination", "value": "Malibu" }]
+        }
+      }
+    },
+    {
+      "name": "Rooms - Check Availability",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/rooms/hotel/hotel-1?checkIn=2026-11-01&checkOut=2026-11-05&adults=2",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "rooms", "hotel", "hotel-1"],
+          "query": [
+            { "key": "checkIn", "value": "2026-11-01" },
+            { "key": "checkOut", "value": "2026-11-05" },
+            { "key": "adults", "value": "2" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Bookings - Create Reservation",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"hotelId\": \"hotel-1\",\n  \"roomId\": \"room-101\",\n  \"checkIn\": \"2026-11-01\",\n  \"checkOut\": \"2026-11-05\",\n  \"guests\": { \"adults\": 2, \"children\": 0 },\n  \"specialRequests\": \"High floor suite\",\n  \"paymentProvider\": \"demo_card\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/bookings",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "bookings"]
+        }
+      }
+    },
+    {
+      "name": "Operations - Check-In Guest",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/check-in/bkg-1002",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "check-in", "bkg-1002"]
+        }
+      }
+    },
+    {
+      "name": "Operations - Check-Out Guest",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/check-out/bkg-1001",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "check-out", "bkg-1001"]
+        }
+      }
+    },
+    {
+      "name": "Manager - Revenue Overview",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/manager/overview/hotel-1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "manager", "overview", "hotel-1"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "jwtToken",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+  ]
+}
